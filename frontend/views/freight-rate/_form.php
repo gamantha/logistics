@@ -18,21 +18,38 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shippingId')->textInput() ?>
 
-    <?= $form->field($model, 'mode_of_transport')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'currency')->textInput(['maxlength' => true]) ?>
+
+    <?php
+
+    echo $form->field($model, 'mode_of_transport')->dropDownList(
+        ['sea' => 'Sea', 'air' => 'Air', 'land' => 'Land']
+    );
+
+    echo $form->field($model, 'currency')->dropDownList(
+    ['idr' => 'IDR', 'sgd' => 'SGD', 'usd' => 'USD']
+    ); ?>
 
     <?= $form->field($model, 'rate')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'unit')->textInput(['maxlength' => true]) ?>
+    <?php
+
+    echo $form->field($model, 'unit')->dropDownList(
+        ['pc' => 'Pc', 'kg' => 'Kg', 'ton' => 'Ton']
+    );
+
+    ?>
 
     <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+    <?php
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    echo $form->field($model, 'status')->dropDownList(
+        ['active' => 'Active', 'inactive' => 'inactive']
+    );
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    ?>
+
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

@@ -11,6 +11,8 @@ use app\models\FreightRate;
  */
 class FreightRateSearch extends FreightRate
 {
+
+    public $shipping;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class FreightRateSearch extends FreightRate
     {
         return [
             [['id', 'shippingId'], 'integer'],
-            [['route_from', 'route_to', 'mode_of_transport', 'currency', 'rate', 'unit', 'type', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['route_from', 'route_to', 'mode_of_transport', 'currency', 'rate', 'unit', 'type', 'status', 'created_at', 'updated_at','shipping'], 'safe'],
         ];
     }
 
@@ -42,11 +44,21 @@ class FreightRateSearch extends FreightRate
     {
         $query = FreightRate::find();
 
+        $query->joinWith(['shipping']);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['shipping'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['shipping.name' => SORT_ASC],
+            'desc' => ['shipping.name' => SORT_DESC],
+        ];
+
 
         $this->load($params);
 
@@ -71,7 +83,10 @@ class FreightRateSearch extends FreightRate
             ->andFilterWhere(['like', 'rate', $this->rate])
             ->andFilterWhere(['like', 'unit', $this->unit])
             ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'shipping.name', $this->shipping])
+        ;
+        ;
 
         return $dataProvider;
     }

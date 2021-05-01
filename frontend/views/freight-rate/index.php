@@ -27,14 +27,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'route_from',
             'route_to',
-            'shippingId',
+//            'shippingId',
+            [
+                'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
+                 'attribute' => 'shipping',
+ 'value' => 'shipping.name',
+//                'value' => function ($data) {
+//                    return $data->shipping->name; // $data['name'] for array data, e.g. using SqlDataProvider.
+//                },
+            ],
+
             'mode_of_transport',
-            //'currency',
-            //'rate',
-            //'unit',
+            'currency',
+            'rate',
+            'unit',
             //'type',
             //'status',
             //'created_at',
