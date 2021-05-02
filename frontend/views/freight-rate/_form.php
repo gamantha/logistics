@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Shipping;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\FreightRate */
@@ -16,11 +18,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'route_to')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'shippingId')->textInput() ?>
+
 
 
 
     <?php
+
+//    echo     $form->field($model, 'shippingId')->textInput();
+
+    $shippingmodels = Shipping::find()->All();
+    $data = \yii\helpers\ArrayHelper::map($shippingmodels,'id', 'name');
+
+echo $form->field($model, 'shippingId')->widget(Select2::classname(), [
+    'data' => $data,
+    'options' => ['placeholder' => 'Select shipping ...'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
 
     echo $form->field($model, 'mode_of_transport')->dropDownList(
         ['sea' => 'Sea', 'air' => 'Air', 'land' => 'Land']
