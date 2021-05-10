@@ -16,10 +16,14 @@ use Yii;
  * @property string|null $rate
  * @property string|null $unit
  * @property string|null $type
- * @property string|null $status
+ * @property string|null $valid_from
+ * @property string|null $valid_to
+ * @property string|null $notes
+ * @property string|null $status active,expired,inactive
  * @property string|null $created_at
  * @property string|null $updated_at
  *
+ * @property FileFreightRate[] $fileFreightRates
  * @property Shipping $shipping
  */
 class FreightRate extends \yii\db\ActiveRecord
@@ -39,7 +43,8 @@ class FreightRate extends \yii\db\ActiveRecord
     {
         return [
             [['shippingId'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['valid_from', 'valid_to', 'created_at', 'updated_at'], 'safe'],
+            [['notes'], 'string'],
             [['route_from', 'route_to', 'mode_of_transport', 'currency', 'rate', 'unit', 'type', 'status'], 'string', 'max' => 255],
             [['shippingId'], 'exist', 'skipOnError' => true, 'targetClass' => Shipping::className(), 'targetAttribute' => ['shippingId' => 'id']],
         ];
@@ -60,10 +65,23 @@ class FreightRate extends \yii\db\ActiveRecord
             'rate' => Yii::t('app', 'Rate'),
             'unit' => Yii::t('app', 'Unit'),
             'type' => Yii::t('app', 'Type'),
-            'status' => Yii::t('app', 'Status'),
+            'valid_from' => Yii::t('app', 'Valid From'),
+            'valid_to' => Yii::t('app', 'Valid To'),
+            'notes' => Yii::t('app', 'Notes'),
+            'status' => Yii::t('app', 'active,expired,inactive'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
+    }
+
+    /**
+     * Gets query for [[FileFreightRates]].
+     *
+     * @return \yii\db\ActiveQuery|FileFreightRateQuery
+     */
+    public function getFileFreightRates()
+    {
+        return $this->hasMany(FileFreightRate::className(), ['freightRateId' => 'id']);
     }
 
     /**

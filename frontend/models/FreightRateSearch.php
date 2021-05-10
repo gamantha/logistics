@@ -20,7 +20,7 @@ class FreightRateSearch extends FreightRate
     {
         return [
             [['id', 'shippingId'], 'integer'],
-            [['route_from', 'route_to', 'mode_of_transport', 'currency', 'rate', 'unit', 'type', 'status', 'created_at', 'updated_at','shipping'], 'safe'],
+            [['route_from', 'route_to', 'mode_of_transport', 'currency', 'rate', 'unit', 'type', 'valid_from', 'valid_to', 'notes', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -72,6 +72,8 @@ class FreightRateSearch extends FreightRate
         $query->andFilterWhere([
             'id' => $this->id,
             'shippingId' => $this->shippingId,
+            'valid_from' => $this->valid_from,
+            'valid_to' => $this->valid_to,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
@@ -85,8 +87,10 @@ class FreightRateSearch extends FreightRate
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'shipping.name', $this->shipping])
+            ->andFilterWhere(['like', 'notes', $this->notes])
+            ->andFilterWhere(['like', 'status', $this->status])
         ;
-        ;
+
 
         return $dataProvider;
     }

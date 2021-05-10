@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Create Freight Rate'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php Pjax::begin(); ?>
+<!--    --><?php //Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -44,6 +44,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'currency',
             'rate',
             'unit',
+            'valid_from',
+            'valid_to',
+            'notes',
+
+
+            [
+                'label'=>'Files',
+                'format' => 'raw',
+                'value'=>function ($data) {
+                    return Html::a('files',['freight-rate/files', 'id' => $data->id]);
+                },
+            ],
+
+
             //'type',
             //'status',
             //'created_at',
@@ -53,6 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?php Pjax::end(); ?>
+<!--    --><?php //Pjax::end(); ?>
 
 </div>
