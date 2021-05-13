@@ -45,11 +45,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
 
             ],
+            'description',
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{filedelete}',
+                'template' => '{editdescription}&nbsp&nbsp&nbsp&nbsp{filedelete}',
                 'buttons' => [
+                    'editdescription' => function ($url) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            $url,
+                            [
+                                'title' => 'Edit description',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+
                     'filedelete' => function ($url) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-trash"></span>',

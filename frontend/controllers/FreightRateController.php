@@ -115,6 +115,28 @@ class FreightRateController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionEditdescription($id)
+    {
+
+        $model = FileFreightRate::findOne($id);
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $timestamp = time();
+
+            $model->save();
+                // file is uploaded successfully
+                Yii::$app->session->setFlash('success', "Edit description");
+
+                return $this->goBack();
+
+        }
+
+
+//        return $this->redirect(Yii::$app->request->referrer);
+
+        return $this->render('editdescription', ['model' => $model]);
+    }
+
     public function actionFiledelete($id)
     {
         $model = FileFreightRate::findOne($id);
@@ -143,6 +165,7 @@ class FreightRateController extends Controller
         $model = new UploadForm();
         $freightrateupload = new FileFreightRate();
         if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             $timestamp = time();
             if ($model->upload($id,$timestamp)) {
