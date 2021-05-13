@@ -63,7 +63,21 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+//            ['class' => 'yii\grid\ActionColumn'],
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Actions',
+                'headerOptions' => ['style' => 'color:#337ab7'],
+                'template' => "{update}&nbsp&nbsp&nbsp&nbsp&nbsp;{delete}",
+                'buttons' => [
+
+                ],
+
+
+            ],
+
+
         ],
     ]); ?>
 

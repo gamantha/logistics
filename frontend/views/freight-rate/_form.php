@@ -1,9 +1,12 @@
 <?php
 
 use app\models\Shipping;
+use kartik\date\DatePicker;
+use kartik\form\ActiveForm;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+//use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\FreightRate */
@@ -12,7 +15,12 @@ use kartik\select2\Select2;
 
 <div class="freight-rate-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $form = ActiveForm::begin([
+    'tooltipStyleFeedback' => true, // shows tooltip styled validation error feedback
+    ]);
+
+    ?>
 
     <?= $form->field($model, 'route_from')->textInput(['maxlength' => true]) ?>
 
@@ -56,8 +64,27 @@ echo $form->field($model, 'shippingId')->widget(Select2::classname(), [
     ?>
 
     <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'notes')->textArea(['maxlength' => true]) ?>
     <?php
+
+
+
+    echo '<label class="control-label">Select date range</label>';
+    echo DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'valid_from',
+        'attribute2' => 'valid_to',
+        'options' => ['placeholder' => 'Start date'],
+        'options2' => ['placeholder' => 'End date'],
+        'type' => DatePicker::TYPE_RANGE,
+        'form' => $form,
+        'pluginOptions' => [
+            'format' => 'yyyy-mm-dd',
+            'autoclose' => true,
+        ]
+    ]);
+
+
 
     echo $form->field($model, 'status')->dropDownList(
         ['active' => 'Active', 'inactive' => 'inactive']

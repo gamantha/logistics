@@ -12,6 +12,7 @@ use Yii;
  * @property int|null $freightRateId
  * @property string|null $type
  * @property string|null $name
+ * @property string|null $description
  * @property string|null $path
  * @property int|null $uploaderUserId
  * @property string|null $created_at
@@ -37,6 +38,7 @@ class FileFreightRate extends \yii\db\ActiveRecord
     {
         return [
             [['freightRateId', 'uploaderUserId'], 'integer'],
+            [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['type', 'name', 'path'], 'string', 'max' => 255],
             [['freightRateId'], 'exist', 'skipOnError' => true, 'targetClass' => FreightRate::className(), 'targetAttribute' => ['freightRateId' => 'id']],
@@ -54,6 +56,7 @@ class FileFreightRate extends \yii\db\ActiveRecord
             'freightRateId' => Yii::t('app', 'Freight Rate ID'),
             'type' => Yii::t('app', 'Type'),
             'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
             'path' => Yii::t('app', 'Path'),
             'uploaderUserId' => Yii::t('app', 'Uploader User ID'),
             'created_at' => Yii::t('app', 'Created At'),

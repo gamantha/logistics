@@ -11,11 +11,15 @@ class UploadForm extends Model
      * @var UploadedFile
      */
     public $imageFile;
+    public $description;
 
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg,doc,docx,xls,xlsx,pdf'],
+            [['description'], 'string'],
+            [['created_at', 'updated_at'], 'safe'],
+//            [['type', 'name', 'path'], 'string', 'max' => 255],
         ];
     }
 

@@ -24,22 +24,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Upload File'), ['addfile', 'id' => $id], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php Pjax::begin(); ?>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
         'columns' => [
-//            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
 'name',
             [
                 'format' => 'html',
                 'value' => function ($data) {
-                    return Html::img(Yii::$app->request->BaseUrl.'/uploads/freight-rate/' . $data->name,
-                        ['height' => '200px']);
+
+                    return Html::a('Download', ['file', 'filename' => $data->name], ['class' => 'profile-link']);
+//                    return Html::img(Yii::$app->request->BaseUrl.'/uploads/freight-rate/' . $data->name,
+//                        ['height' => '200px']);
                 },
 
             ],
@@ -63,6 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?php Pjax::end(); ?>
+
 
 </div>

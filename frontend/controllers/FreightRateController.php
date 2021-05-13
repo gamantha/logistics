@@ -73,7 +73,7 @@ class FreightRateController extends Controller
         $model = new FreightRate();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -125,6 +125,18 @@ class FreightRateController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
+    public function actionFile($filename)
+    {
+//        $storagePath = Yii::getAlias('@app/files');
+        $storagePath = Yii::getAlias('@app').'/web/uploads/freight-rate';
+        // check filename for allowed chars (do not allow ../ to avoid security issue: downloading arbitrary files)
+        if (!is_file("$storagePath/$filename")) {
+//            throw new \yii\web\NotFoundHttpException('The file does not exists.');
+            throw new \yii\web\NotFoundHttpException($storagePath);
+        }
+        return Yii::$app->response->sendFile("$storagePath/$filename", $filename);
+    }
+
 
     public function actionAddfile($id)
     {
@@ -135,6 +147,7 @@ class FreightRateController extends Controller
             $timestamp = time();
             if ($model->upload($id,$timestamp)) {
                 $freightrateupload->freightRateId = $id;
+                $freightrateupload->description = $model->description;
                 $freightrateupload->name = $id . '_' . $timestamp . '.' . $model->imageFile->extension;
                 $freightrateupload->path = 'uploads/freight-rate/';
                 $freightrateupload->save();
