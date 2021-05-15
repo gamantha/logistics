@@ -59,7 +59,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             //'type',
-            //'status',
+//            'status',
+            [
+                'label'=>'Expiry status',
+                'format' => 'raw',
+                'value'=>function ($data) {
+                    if ($data->valid_to > date("Y-m-d")) {
+                        return Html::button('Valid', ['class' => 'btn btn-success']);
+//                        return Html::a(Yii::t('app', 'Create Freight Rate'), ['create'], ['class' => 'btn btn-success'])
+//                        return 'masih valid';
+                    } else {
+                        return Html::button('Expire', ['class' => 'btn btn-danger']);
+                    }
+
+
+//                    return Html::a('files',['freight-rate/files', 'id' => $data->id]);
+                },
+            ],
             //'created_at',
             //'updated_at',
 
