@@ -42,6 +42,19 @@ AppAsset::register($this);
         ['label' => 'Freight Rate', 'url' => ['/freight-rate/index']],
 //        ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
+
+    $menuItems[] = '<li class="dropdown" style="list-style: none;">'
+        .Html::a(Yii::t('app', 'Master Data' ), [''], ['class'=>'dropdown-toggle', 'data-toggle'=>'dropdown']) .
+        '<ul class="dropdown-menu">
+           <li>'.Html::a(Yii::t('app', 'Transactions'), ['/transaction/index'], ['class'=>'']) .'</li>
+              <li class="divider"></li>
+           <li>'.Html::a(Yii::t('app', 'Customers'), ['/customer/index'], ['class'=>'']) .'</li>
+           <li>'.Html::a(Yii::t('app', 'Products'), ['/product/index'], ['class'=>'']) .'</li>
+           <li>'.Html::a(Yii::t('app', 'Employees'), ['/employee/index'], ['class'=>'']) .'</li>
+           <li>'.Html::a(Yii::t('app', 'Payments'), ['/payment/index'], ['class'=>'']) .'</li>
+         </ul>
+   </li>';
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

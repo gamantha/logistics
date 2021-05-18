@@ -13,7 +13,7 @@ use Yii;
  * @property int|null $shippingId
  * @property string|null $mode_of_transport
  * @property string|null $currency
- * @property string|null $rate
+ * @property int|null $rate
  * @property string|null $unit
  * @property string|null $type
  * @property string|null $valid_from
@@ -42,10 +42,10 @@ class FreightRate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shippingId'], 'integer'],
+            [['shippingId', 'rate'], 'integer'],
             [['valid_from', 'valid_to', 'created_at', 'updated_at'], 'safe'],
             [['notes'], 'string'],
-            [['route_from', 'route_to', 'mode_of_transport', 'currency', 'rate', 'unit', 'type', 'status'], 'string', 'max' => 255],
+            [['route_from', 'route_to', 'mode_of_transport', 'currency', 'unit', 'type', 'status'], 'string', 'max' => 255],
             [['shippingId'], 'exist', 'skipOnError' => true, 'targetClass' => Shipping::className(), 'targetAttribute' => ['shippingId' => 'id']],
         ];
     }
